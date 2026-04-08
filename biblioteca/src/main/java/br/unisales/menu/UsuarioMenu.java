@@ -15,18 +15,10 @@ public final class UsuarioMenu {
     public UsuarioMenu(Scanner scanner) {
         this.scanner = scanner;
         System.out.println("==========================================");
-        System.out.println("   SISTEMA DE CRUD DE USUÁRIO COM JPA     ");
+        System.out.println("   MENU USUÁRIO     ");
         System.out.println("==========================================");
-        /*
-         * Cria a fábrica de EntityManager com base na persistence-unit
-         * definida no arquivo persistence.xml.
-         *
-         * Troque "SQLitePU" por:
-         * - "MySQLPU"
-         * - "PostgresPU"
-         * - "SqlServerPU"
-         * conforme o banco desejado.
-         */
+        
+
         ManagerFactory emf = new ManagerFactory("SQLitePU");
         UsuarioService usuarioService = new UsuarioService(emf.get());
         int opcao;
@@ -48,8 +40,8 @@ public final class UsuarioMenu {
         emf.close();
     }
 
-    /**
-     * Exibe o menu principal do sistema.
+    /*
+    Exibe o menu principal do sistema.
      */
     private static void exibirMenu() {
         System.out.println("--------------- MENU ----------------");
@@ -62,8 +54,8 @@ public final class UsuarioMenu {
         System.out.println("-------------------------------------");
     }
 
-    /**
-     * Realiza o cadastro de um novo usuário.
+    /*
+     Realiza o cadastro de um novo usuário.
      */
     private void cadastrar(UsuarioService usuarioService) {
         MenuUtil.limparConsole();
@@ -81,8 +73,8 @@ public final class UsuarioMenu {
         usuarioService.inserir(item);
     }
 
-    /**
-     * Lista todos os usuários cadastrados.
+    /*
+    Lista todos os usuários cadastrados.
      */
     private static void listar(UsuarioService usuarioService) {
         MenuUtil.limparConsole();
@@ -101,8 +93,8 @@ public final class UsuarioMenu {
         System.out.println("-------------------------------------");
     }
 
-    /**
-     * Busca um usuário pelo ID.
+    /*
+    Busca um usuário pelo ID.
      */
     private void buscarPorId(UsuarioService usuarioService) {
         MenuUtil.limparConsole();
@@ -121,8 +113,8 @@ public final class UsuarioMenu {
         System.out.println("-------------------------------------");
     }
 
-    /**
-     * Atualiza os dados de um usuário existente.
+    /*
+    Atualiza os dados de um usuário existente.
      */
     private void atualizar(UsuarioService usuarioService) {
         MenuUtil.limparConsole();
@@ -143,8 +135,8 @@ public final class UsuarioMenu {
         usuarioService.atualizar(item);
     }
 
-    /**
-     * Exclui um usuário pelo ID.
+    /*
+    Exclui um usuário pelo ID.
      */
     private void excluir(UsuarioService usuarioService) {
         MenuUtil.limparConsole();
@@ -167,8 +159,8 @@ public final class UsuarioMenu {
         }
     }
 
-    /**
-     * Lê um número inteiro digitado pelo usuário.
+    /*
+    Lê um número inteiro digitado pelo usuário.
      */
     private Integer lerInteiro(String mensagem) {
         while (true) {
@@ -181,8 +173,8 @@ public final class UsuarioMenu {
         }
     }
 
-    /**
-     * Lê um texto digitado pelo usuário.
+    /*
+    Lê a resposta do usuário.
      */
     private String lerTexto(String mensagem) {
         System.out.print(mensagem);
