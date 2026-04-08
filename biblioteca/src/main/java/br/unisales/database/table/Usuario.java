@@ -29,7 +29,7 @@ public class Usuario {
     @Default
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo", nullable = false, length = 20)
-    private UsuarioTipoEnum tipo = UsuarioTipoEnum.ALUNO;
+    private UsuarioTipoEnum tipo = 
 
     @Column(nullable = false, length = 150)
     private String email;
