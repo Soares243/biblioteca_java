@@ -14,18 +14,10 @@ public final class CategoriaMenu {
     public CategoriaMenu(Scanner scanner) {
         this.scanner = scanner;
         System.out.println("==========================================");
-        System.out.println("   SISTEMA DE CRUD DE CATEGORIA COM JPA     ");
+        System.out.println("   MENU CATEGORIA    ");
         System.out.println("==========================================");
-        /*
-         * Cria a fábrica de EntityManager com base na persistence-unit
-         * definida no arquivo persistence.xml.
-         *
-         * Troque "SQLitePU" por:
-         * - "MySQLPU"
-         * - "PostgresPU"
-         * - "SqlServerPU"
-         * conforme o banco desejado.
-         */
+        
+
         ManagerFactory emf = new ManagerFactory("SQLitePU");
         CategoriaService categoriaService = new CategoriaService(emf.get());
         int opcao;
