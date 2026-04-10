@@ -1,5 +1,6 @@
 package br.unisales;
 
+import br.unisales.database.table.Emprestimo;
 import br.unisales.menu.CategoriaMenu;
 import br.unisales.menu.UsuarioMenu;
 import br.unisales.menu.util.MenuUtil;
@@ -30,6 +31,7 @@ public class Main {
             switch (opcao) {
                 case 1 -> menuCategoria();
                 case 2 -> menuUsuario();
+                case 3 -> menuEmprestimo();
                 case 0 -> System.out.println("Encerrando o sistema...");
                 default -> System.out.println("Opcao invalida. Tente novamente.");
             }
