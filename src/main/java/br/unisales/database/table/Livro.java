@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.unisales.database.table.primery_key.LivroCategoriaId;
+import br.unisales.database.table.primery_key.LivroAutorId;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -15,6 +19,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Builder.Default;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 @Data
 @NoArgsConstructor
@@ -34,8 +40,21 @@ public class Livro {
     private int ano;
 
     @Default
+    @Fetch(FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LivroCategoria> livroCategorias = new ArrayList<>();
+
+    @Default
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LivroAutor> livroAutores = new ArrayList<>();
+
+    @Default
+    @Fetch(FetchMode.SUBSELECT)
+    @ElementCollection
+    @CollectionTable(name = "livro_palavras_chave", joinColumns = @JoinColumn(name = "livro_isbn"))
+    @Column(name = "palavra_chave")
+    private List<String> palavrasChave = new ArrayList<>();
 
     /**
      * @apiNote Adiciona uma categoria ao livro para ser salva no banco de dados
@@ -67,6 +86,41 @@ public class Livro {
                 lc.getCategoria().getLivroCategorias().remove(lc);
                 lc.setLivro(null);
                 lc.setCategoria(null);
+            }
+            return match;
+        });
+    }
+
+    /**
+     * @apiNote Adiciona um autor ao livro para ser salvo no banco de dados
+     * @param autor
+     * @author Vito Rodrigues Franzosi
+     * @Data Criação 10.04.2026
+     */
+    public void addAutor(Autor autor) {
+        LivroAutor la = new LivroAutor();
+
+        la.setLivro(this);
+        la.setAutor(autor);
+        la.setId(new LivroAutorId(this.isbn, autor.getId()));
+
+        livroAutores.add(la);
+        autor.getLivroAutores().add(la);
+    }
+
+    /**
+     * @apiNote Remove um autor do livro para ser excluído do banco de dados
+     * @param autor
+     * @author Vito Rodrigues Franzosi
+     * @Data Criação 10.04.2026
+     */
+    public void removeAutor(Autor autor) {
+        livroAutores.removeIf(la -> {
+            boolean match = la.getAutor().equals(autor);
+            if (match) {
+                la.getAutor().getLivroAutores().remove(la);
+                la.setLivro(null);
+                la.setAutor(null);
             }
             return match;
         });

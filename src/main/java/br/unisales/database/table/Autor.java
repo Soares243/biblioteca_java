@@ -1,13 +1,19 @@
 package br.unisales.database.table;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +27,8 @@ public class Autor {
 
     @Column(name = "nome", nullable = false, length = 100, unique = true)
     private String nome;
+
+    @Default
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LivroAutor> livroAutores = new ArrayList<>();
 }
