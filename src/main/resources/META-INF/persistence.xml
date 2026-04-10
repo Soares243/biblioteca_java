@@ -34,6 +34,7 @@
         <class>br.unisales.database.table.LivroCategoria</class>
         <class>br.unisales.database.table.Usuario</class>
         <class>br.unisales.database.table.Emprestimo</class>
+        <class>br.unisales.database.table.Exemplar</class>
         
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
