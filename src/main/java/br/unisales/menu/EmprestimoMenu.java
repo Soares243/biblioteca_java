@@ -68,10 +68,10 @@ public final class EmprestimoMenu {
 
         Integer usuarioId = lerInteiro("Informe o ID do usuário: ");
         Integer exemplarId = lerInteiro("Informe o ID do exemplar: ");
-        String isbn = lerTexto("Informe o ISBN do livro: ");
+        String título = lerTexto("Informe o título do livro: ");
         LocalDate dataPrevista = lerData("Informe a data prevista de devolução (dd/MM/yyyy): ");
 
-        if (emprestimoService.emprestarExemplar(usuarioId, exemplarId, isbn, dataPrevista)) {
+        if (emprestimoService.emprestarExemplar(usuarioId, exemplarId, título, dataPrevista)) {
             System.out.println("Empréstimo registrado com sucesso.");
         } else {
             System.out.println("Falha ao registrar empréstimo. Verifique os dados informados.");

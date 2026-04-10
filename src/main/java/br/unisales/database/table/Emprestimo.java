@@ -42,7 +42,7 @@ public class Emprestimo {
     @Column(name = "data_emprestimo", nullable = false)
     private LocalDate dataEmprestimo;
 
-    @Column(name = "data_prevista", nullable = false)
+    @Column(name = "data_devolucao_prevista", nullable = false)
     private LocalDate dataPrevista;
 
     @Column(name = "data_devolucao")
