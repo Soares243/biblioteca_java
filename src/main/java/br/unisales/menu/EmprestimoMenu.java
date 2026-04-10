@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import br.unisales.database.table.Emprestimo;
-import br.unisales.database.table.Livro;
-import br.unisales.database.table.Usuario;
 import br.unisales.manager_factory.ManagerFactory;
 import br.unisales.menu.util.MenuUtil;
 import br.unisales.service.EmprestimoService;
