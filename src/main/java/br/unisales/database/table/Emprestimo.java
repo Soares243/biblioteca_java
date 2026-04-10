@@ -48,6 +48,7 @@ public class Emprestimo {
     @Column(name = "data_devolucao")
     private LocalDate dataDevolucao;
 
+    @Default
     @Column(name = "status", nullable = false, length = 20)
     private String status = "EMPRESTADO";
 
