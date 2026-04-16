@@ -56,35 +56,20 @@ public class AutorService {
         }
     }
 
-    public Autor buscarPorId(Integer id) {
-        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-        try {
-            return entityManager.find(Autor.class, id);
-        } catch (Exception e) {
-            System.out.println("Erro ao buscar autor por ID: " + e.getMessage());
-            return null;
-        } finally {
-            entityManager.close();
-        }
+    public Autor buscarPorNome(String nome) {
+    EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+    try {
+        return entityManager.createQuery(
+                "SELECT a FROM Autor a WHERE a.nome = :nome", Autor.class)
+                .setParameter("nome", nome)
+                .getSingleResult();
+    } catch (Exception e) {
+        System.out.println("Erro ao buscar autor por nome: " + e.getMessage());
+        return null;
+    } finally {
+        entityManager.close();
     }
-
-    public void atualizar(Autor autor) {
-        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            entityManager.merge(autor);
-            transaction.commit();
-            System.out.println("Autor atualizado com sucesso.");
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            System.out.println("Erro ao atualizar autor: " + e.getMessage());
-        } finally {
-            entityManager.close();
-        }
-    }
+}
 
     public void deletar(Integer id) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
