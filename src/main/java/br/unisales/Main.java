@@ -30,10 +30,10 @@ public class Main {
             opcao = lerInteiro("Escolha uma opcao: ");
 
             switch (opcao) {
-                case 1 -> menuCategoria();
-                case 2 -> menuUsuario();
-                case 3 -> menuLivro();
-                case 4 -> menuAutor();
+                case 1 -> menuUsuario();
+                case 2 -> menuLivro();
+                case 3 -> menuAutor();
+                case 4 -> menuCategoria();
                 case 5 -> menuEmprestimo();
                 case 0 -> System.out.println("Encerrando o sistema...");
                 default -> System.out.println("Opcao invalida. Tente novamente.");
@@ -56,10 +56,10 @@ public class Main {
 
     private static void exibirMenu() {
         System.out.println("--------------- MENU ----------------");
-        System.out.println("1 - Categoria");
-        System.out.println("2 - Usuário");
-        System.out.println("3 - Livro");
-        System.out.println("4 - Autor");
+        System.out.println("1 - Usuário");
+        System.out.println("2 - Livro");
+        System.out.println("3 - Autor");
+        System.out.println("4 - Categoria");
         System.out.println("5 - Empréstimo");
         System.out.println("0 - Sair");
         System.out.println("-------------------------------------");
