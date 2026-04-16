@@ -3,6 +3,7 @@ package br.unisales;
 import br.unisales.menu.CategoriaMenu;
 import br.unisales.menu.EmprestimoMenu;
 import br.unisales.menu.LivroMenu;
+import br.unisales.menu.ReservaMenu;
 import br.unisales.menu.UsuarioMenu;
 import br.unisales.menu.util.MenuUtil;
 
@@ -35,6 +36,7 @@ public class Main {
                 case 3 -> menuAutor();
                 case 4 -> menuCategoria();
                 case 5 -> menuEmprestimo();
+                case 6 -> menuReserva();
                 case 0 -> System.out.println("Encerrando o sistema...");
                 default -> System.out.println("Opcao invalida. Tente novamente.");
             }
@@ -61,6 +63,7 @@ public class Main {
         System.out.println("3 - Autor");
         System.out.println("4 - Categoria");
         System.out.println("5 - Empréstimo");
+        System.out.println("6 - Reserva");
         System.out.println("0 - Sair");
         System.out.println("-------------------------------------");
     }
@@ -88,6 +91,11 @@ public class Main {
     private static void menuEmprestimo() {
         MenuUtil.limparConsole();
         new EmprestimoMenu(scanner);
+    }
+
+    private static void menuReserva() {
+        MenuUtil.limparConsole();
+        new ReservaMenu(scanner);
     }
 
     private static Integer lerInteiro(String mensagem) {
