@@ -2,6 +2,7 @@ package br.unisales.service;
 
 import br.unisales.database.table.Emprestimo;
 import br.unisales.database.table.Livro;
+import br.unisales.database.table.Multa;
 import br.unisales.database.table.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -84,15 +85,14 @@ public class EmprestimoService {
             return false;
         }
 
-        Emprestimo emprestimo = Emprestimo.builder()
-                .usuario(usuario)
-                .exemplarId(exemplarId)
-                .livro(livro)
-                .dataEmprestimo(LocalDate.now())
-                .dataPrevista(dataPrevista)
-                .status("EMPRESTADO")
-                .devolvido(Boolean.FALSE)
-                .build();
+        Emprestimo emprestimo = new Emprestimo();
+        emprestimo.setUsuario(usuario);
+        emprestimo.setExemplarId(exemplarId);
+        emprestimo.setLivro(livro);
+        emprestimo.setDataEmprestimo(LocalDate.now());
+        emprestimo.setDataPrevista(dataPrevista);
+        emprestimo.setStatus("EMPRESTADO");
+        emprestimo.setDevolvido(Boolean.FALSE);
 
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -130,6 +130,7 @@ public class EmprestimoService {
             emprestimo.devolver(dataDevolucao);
             transaction.begin();
             entityManager.merge(emprestimo);
+            registrarOuAtualizarMulta(entityManager, emprestimo);
             transaction.commit();
             System.out.println("Exemplar devolvido com sucesso.");
             return true;
@@ -180,12 +181,7 @@ public class EmprestimoService {
             return 0.0;
         }
 
-        LocalDate dataBase = emprestimo.getDataDevolucao() != null ? emprestimo.getDataDevolucao() : LocalDate.now();
-        long diasAtraso = ChronoUnit.DAYS.between(emprestimo.getDataPrevista(), dataBase);
-        if (diasAtraso <= 0) {
-            return 0.0;
-        }
-        return diasAtraso * 2.0;
+        return calcularDiasAtraso(emprestimo) * 2.0;
     }
 
     public double calcularMulta(Integer emprestimoId) {
@@ -202,7 +198,8 @@ public class EmprestimoService {
                 return false;
             }
             transaction.begin();
-            entityManager.merge(emprestimo);
+            Emprestimo atualizado = entityManager.merge(emprestimo);
+            registrarOuAtualizarMulta(entityManager, atualizado);
             transaction.commit();
             return true;
         } catch (Exception e) {
@@ -261,5 +258,60 @@ public class EmprestimoService {
         } finally {
             entityManager.close();
         }
+    }
+
+    private int calcularDiasAtraso(Emprestimo emprestimo) {
+        if (emprestimo == null || emprestimo.getDataPrevista() == null) {
+            return 0;
+        }
+
+        LocalDate dataBase = emprestimo.getDataDevolucao() != null ? emprestimo.getDataDevolucao() : LocalDate.now();
+        long diasAtraso = ChronoUnit.DAYS.between(emprestimo.getDataPrevista(), dataBase);
+        return diasAtraso > 0 ? (int) diasAtraso : 0;
+    }
+
+    private void registrarOuAtualizarMulta(EntityManager entityManager, Emprestimo emprestimo) {
+        if (emprestimo == null || !Boolean.TRUE.equals(emprestimo.getDevolvido()) || emprestimo.getDataDevolucao() == null) {
+            return;
+        }
+
+        int diasAtraso = calcularDiasAtraso(emprestimo);
+        if (diasAtraso <= 0) {
+            return;
+        }
+
+        double valorCalculado = diasAtraso * 2.0;
+        Multa multa = buscarMultaPorEmprestimoId(entityManager, emprestimo.getId());
+
+        if (multa == null) {
+                Multa novaMulta = new Multa();
+                novaMulta.setEmprestimoId(emprestimo.getId());
+                novaMulta.setValor(valorCalculado);
+                novaMulta.setDiasAtraso(diasAtraso);
+                novaMulta.setQuitada(Boolean.FALSE);
+            entityManager.persist(novaMulta);
+            return;
+        }
+
+        multa.setValor(valorCalculado);
+        multa.setDiasAtraso(diasAtraso);
+        entityManager.merge(multa);
+    }
+
+    private Multa buscarMultaPorEmprestimoId(EntityManager entityManager, Integer emprestimoId) {
+        if (emprestimoId == null) {
+            return null;
+        }
+
+        List<Multa> multas = entityManager
+                .createQuery("SELECT m FROM Multa m WHERE m.emprestimoId = :emprestimoId", Multa.class)
+                .setParameter("emprestimoId", emprestimoId)
+                .setMaxResults(1)
+                .getResultList();
+
+        if (multas.isEmpty()) {
+            return null;
+        }
+        return multas.get(0);
     }
 }

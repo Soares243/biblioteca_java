@@ -14,18 +14,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "livro")
 public class Livro {
@@ -39,22 +30,32 @@ public class Livro {
     @Column(name = "ano")
     private int ano;
 
-    @Default
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LivroCategoria> livroCategorias = new ArrayList<>();
 
-    @Default
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LivroAutor> livroAutores = new ArrayList<>();
 
-    @Default
     @Fetch(FetchMode.SUBSELECT)
     @ElementCollection
     @CollectionTable(name = "livro_palavras_chave", joinColumns = @JoinColumn(name = "livro_isbn"))
     @Column(name = "palavra_chave")
     private List<String> palavrasChave = new ArrayList<>();
+
+    public Livro() {
+    }
+
+    public Livro(String isbn, String titulo, int ano, List<LivroCategoria> livroCategorias,
+            List<LivroAutor> livroAutores, List<String> palavrasChave) {
+        this.isbn = isbn;
+        this.titulo = titulo;
+        this.ano = ano;
+        this.livroCategorias = livroCategorias;
+        this.livroAutores = livroAutores;
+        this.palavrasChave = palavrasChave;
+    }
 
     /**
      * @apiNote Adiciona uma categoria ao livro para ser salva no banco de dados
@@ -124,5 +125,53 @@ public class Livro {
             }
             return match;
         });
-    }    
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public List<LivroCategoria> getLivroCategorias() {
+        return livroCategorias;
+    }
+
+    public void setLivroCategorias(List<LivroCategoria> livroCategorias) {
+        this.livroCategorias = livroCategorias;
+    }
+
+    public List<LivroAutor> getLivroAutores() {
+        return livroAutores;
+    }
+
+    public void setLivroAutores(List<LivroAutor> livroAutores) {
+        this.livroAutores = livroAutores;
+    }
+
+    public List<String> getPalavrasChave() {
+        return palavrasChave;
+    }
+
+    public void setPalavrasChave(List<String> palavrasChave) {
+        this.palavrasChave = palavrasChave;
+    }
 }

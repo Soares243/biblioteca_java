@@ -11,16 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "emprestimo")
 public class Emprestimo {
@@ -48,13 +39,27 @@ public class Emprestimo {
     @Column(name = "data_devolucao")
     private LocalDate dataDevolucao;
 
-    @Default
     @Column(name = "status", nullable = false, length = 20)
     private String status = "EMPRESTADO";
 
-    @Default
     @Column(name = "devolvido", nullable = false)
     private Boolean devolvido = Boolean.FALSE;
+
+    public Emprestimo() {
+    }
+
+    public Emprestimo(Integer id, Usuario usuario, Integer exemplarId, Livro livro, LocalDate dataEmprestimo,
+            LocalDate dataPrevista, LocalDate dataDevolucao, String status, Boolean devolvido) {
+        this.id = id;
+        this.usuario = usuario;
+        this.exemplarId = exemplarId;
+        this.livro = livro;
+        this.dataEmprestimo = dataEmprestimo;
+        this.dataPrevista = dataPrevista;
+        this.dataDevolucao = dataDevolucao;
+        this.status = status;
+        this.devolvido = devolvido;
+    }
 
     public void devolver(LocalDate dataDevolucao) {
         this.dataDevolucao = dataDevolucao;
@@ -65,5 +70,77 @@ public class Emprestimo {
     public void renovar(LocalDate novaDataPrevista) {
         this.dataPrevista = novaDataPrevista;
         this.status = "RENOVADO";
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getExemplarId() {
+        return exemplarId;
+    }
+
+    public void setExemplarId(Integer exemplarId) {
+        this.exemplarId = exemplarId;
+    }
+
+    public Livro getLivro() {
+        return livro;
+    }
+
+    public void setLivro(Livro livro) {
+        this.livro = livro;
+    }
+
+    public LocalDate getDataEmprestimo() {
+        return dataEmprestimo;
+    }
+
+    public void setDataEmprestimo(LocalDate dataEmprestimo) {
+        this.dataEmprestimo = dataEmprestimo;
+    }
+
+    public LocalDate getDataPrevista() {
+        return dataPrevista;
+    }
+
+    public void setDataPrevista(LocalDate dataPrevista) {
+        this.dataPrevista = dataPrevista;
+    }
+
+    public LocalDate getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    public void setDataDevolucao(LocalDate dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Boolean getDevolvido() {
+        return devolvido;
+    }
+
+    public void setDevolvido(Boolean devolvido) {
+        this.devolvido = devolvido;
     }
 }

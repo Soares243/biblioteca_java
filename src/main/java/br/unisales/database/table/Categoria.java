@@ -9,16 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "categoria")
 public class Categoria {
@@ -27,7 +18,39 @@ public class Categoria {
     private Integer id;
     @Column(name = "nome", nullable = false, length = 100, unique = true)
     private String nome;
-    @Default
     @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LivroCategoria> livroCategorias = new ArrayList<>();
+
+    public Categoria() {
+    }
+
+    public Categoria(Integer id, String nome, List<LivroCategoria> livroCategorias) {
+        this.id = id;
+        this.nome = nome;
+        this.livroCategorias = livroCategorias;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<LivroCategoria> getLivroCategorias() {
+        return livroCategorias;
+    }
+
+    public void setLivroCategorias(List<LivroCategoria> livroCategorias) {
+        this.livroCategorias = livroCategorias;
+    }
 }

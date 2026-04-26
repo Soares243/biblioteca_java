@@ -9,16 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "autor")
 public class Autor {
@@ -28,7 +19,39 @@ public class Autor {
     @Column(name = "nome", nullable = false, length = 100, unique = true)
     private String nome;
 
-    @Default
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LivroAutor> livroAutores = new ArrayList<>();
+
+    public Autor() {
+    }
+
+    public Autor(Integer id, String nome, List<LivroAutor> livroAutores) {
+        this.id = id;
+        this.nome = nome;
+        this.livroAutores = livroAutores;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public List<LivroAutor> getLivroAutores() {
+        return livroAutores;
+    }
+
+    public void setLivroAutores(List<LivroAutor> livroAutores) {
+        this.livroAutores = livroAutores;
+    }
 }

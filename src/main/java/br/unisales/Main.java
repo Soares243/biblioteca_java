@@ -1,16 +1,16 @@
 package br.unisales;
 
-import br.unisales.menu.CategoriaMenu;
-import br.unisales.menu.EmprestimoMenu;
-import br.unisales.menu.LivroMenu;
-import br.unisales.menu.ReservaMenu;
-import br.unisales.menu.UsuarioMenu;
-import br.unisales.menu.util.MenuUtil;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import br.unisales.menu.CategoriaMenu;
+import br.unisales.menu.LivroMenu;
+import br.unisales.menu.MultaMenu;
+import br.unisales.menu.ReservaMenu;
+import br.unisales.menu.UsuarioMenu;
+import br.unisales.menu.util.MenuUtil;
 
 public class Main {
 
@@ -37,6 +37,7 @@ public class Main {
                 case 4 -> menuCategoria();
                 case 5 -> menuEmprestimo();
                 case 6 -> menuReserva();
+                case 7 -> menuMulta();
                 case 0 -> System.out.println("Encerrando o sistema...");
                 default -> System.out.println("Opcao invalida. Tente novamente.");
             }
@@ -64,6 +65,7 @@ public class Main {
         System.out.println("4 - Categoria");
         System.out.println("5 - Empréstimo");
         System.out.println("6 - Reserva");
+        System.out.println("7 - Multa");
         System.out.println("0 - Sair");
         System.out.println("-------------------------------------");
     }
@@ -90,12 +92,17 @@ public class Main {
 
     private static void menuEmprestimo() {
         MenuUtil.limparConsole();
-        new EmprestimoMenu(scanner);
+        new br.unisales.menu.EmprestimoMenu(scanner);
     }
 
     private static void menuReserva() {
         MenuUtil.limparConsole();
         new ReservaMenu(scanner);
+    }
+
+    private static void menuMulta() {
+        MenuUtil.limparConsole();
+        new MultaMenu(scanner);
     }
 
     private static Integer lerInteiro(String mensagem) {

@@ -5,13 +5,7 @@ import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Embeddable
 public class LivroAutorId implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -21,6 +15,30 @@ public class LivroAutorId implements Serializable {
 
     @Column(name = "autor_id", nullable = false)
     private Integer autorId;
+
+    public LivroAutorId() {
+    }
+
+    public LivroAutorId(String livroIsbn, Integer autorId) {
+        this.livroIsbn = livroIsbn;
+        this.autorId = autorId;
+    }
+
+    public String getLivroIsbn() {
+        return livroIsbn;
+    }
+
+    public void setLivroIsbn(String livroIsbn) {
+        this.livroIsbn = livroIsbn;
+    }
+
+    public Integer getAutorId() {
+        return autorId;
+    }
+
+    public void setAutorId(Integer autorId) {
+        this.autorId = autorId;
+    }
 
     @Override
     public boolean equals(Object o) {

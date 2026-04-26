@@ -9,16 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Builder.Default;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "exemplar")
 public class Exemplar {
@@ -29,8 +20,40 @@ public class Exemplar {
     @Column(name = "livro_isbn", nullable = false, length = 20)
     private String isbnLivro;
 
-    @Default
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false, length = 20)
     private ExemplarStatusEnum status = ExemplarStatusEnum.DISPONIVEL;
+
+    public Exemplar() {
+    }
+
+    public Exemplar(Integer id, String isbnLivro, ExemplarStatusEnum status) {
+        this.id = id;
+        this.isbnLivro = isbnLivro;
+        this.status = status;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getIsbnLivro() {
+        return isbnLivro;
+    }
+
+    public void setIsbnLivro(String isbnLivro) {
+        this.isbnLivro = isbnLivro;
+    }
+
+    public ExemplarStatusEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(ExemplarStatusEnum status) {
+        this.status = status;
+    }
 }

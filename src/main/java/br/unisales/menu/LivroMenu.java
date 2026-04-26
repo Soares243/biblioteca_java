@@ -3,13 +3,13 @@ package br.unisales.menu;
 import java.util.List;
 import java.util.Scanner;
 
-import br.unisales.database.table.Livro;
 import br.unisales.database.table.Autor;
 import br.unisales.database.table.Exemplar;
+import br.unisales.database.table.Livro;
 import br.unisales.manager_factory.ManagerFactory;
 import br.unisales.menu.util.MenuUtil;
-import br.unisales.service.LivroService;
 import br.unisales.service.ExemplarService;
+import br.unisales.service.LivroService;
 
 public final class LivroMenu {
     private final Scanner scanner;
@@ -83,11 +83,10 @@ public final class LivroMenu {
         String titulo = this.lerTexto("Informe o título: ");
         Integer ano = this.lerInteiro("Informe o ano de publicação: ");
 
-        Livro livro = Livro.builder()
-                .isbn(isbn)
-                .titulo(titulo)
-                .ano(ano)
-                .build();
+        Livro livro = new Livro();
+        livro.setIsbn(isbn);
+        livro.setTitulo(titulo);
+        livro.setAno(ano);
 
         // Adicionar palavras-chave (opcional)
         String adicionarPalavras = this.lerTexto("Deseja adicionar palavras-chave? (sim/não): ");
@@ -104,9 +103,8 @@ public final class LivroMenu {
         livroService.inserir(livro);
 
         // Criar exemplar automaticamente
-        Exemplar exemplar = Exemplar.builder()
-                .isbnLivro(isbn)
-                .build();
+        Exemplar exemplar = new Exemplar();
+        exemplar.setIsbnLivro(isbn);
         exemplarService.inserir(exemplar);
     }
 
