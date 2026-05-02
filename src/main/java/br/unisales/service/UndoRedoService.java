@@ -24,7 +24,8 @@ public class UndoRedoService {
 
         @Override
         public String toString() {
-            return String.format("[%s] %s - %s", tipo, descricao, new java.util.Date(timestamp));
+            String detalhes = dado != null ? " (" + dado + ")" : "";
+            return String.format("[%s] %s%s - %s", tipo, descricao, detalhes, new java.util.Date(timestamp));
         }
     }
 
@@ -44,9 +45,10 @@ public class UndoRedoService {
 
     /**
      * Registra uma ação no histórico
+     * 
      * @param descricao Descrição da ação
-     * @param tipo Tipo da ação (INSERT, UPDATE, DELETE, etc.)
-     * @param dado Dados relacionados à ação
+     * @param tipo      Tipo da ação (INSERT, UPDATE, DELETE, etc.)
+     * @param dado      Dados relacionados à ação
      */
     public void registrarAcao(String descricao, String tipo, Object dado) {
         if (descricao == null || descricao.trim().isEmpty()) {
@@ -59,13 +61,21 @@ public class UndoRedoService {
         // Limpa o histórico de redo quando uma nova ação é registrada
         pilhaRedo.clear();
 
-        // Limita o tamanho do histórico
+        // Limita o tamanho do histórico removendo as ações mais antigas
         if (pilhaUndo.size() > limiteHistorico) {
-            // Remove as ações mais antigas (não há método de remover do final da pilha, 
-            // então criamos uma nova pilha)
-            MinhaPilha<Acao> novaPilha = new MinhaPilha<>();
-            while (pilhaUndo.size() > limiteHistorico - 1) {
-                pilhaUndo.pop();
+            MinhaPilha<Acao> pilhaTemp = new MinhaPilha<>();
+
+            // Transfere as ações para uma pilha temporária
+            while (pilhaUndo.size() > 1) {
+                pilhaTemp.push(pilhaUndo.pop());
+            }
+
+            // A ação mais antiga fica em pilhaUndo e é descartada
+            pilhaUndo.pop();
+
+            // Reconstrói pilhaUndo com as ações mais recentes
+            while (!pilhaTemp.isEmpty()) {
+                pilhaUndo.push(pilhaTemp.pop());
             }
         }
 
@@ -74,6 +84,7 @@ public class UndoRedoService {
 
     /**
      * Desfaz a última ação registrada
+     * 
      * @return A ação desfeita, ou null se não houver ações
      */
     public Acao desfazer() {
@@ -91,6 +102,7 @@ public class UndoRedoService {
 
     /**
      * Refaz a última ação desfeita
+     * 
      * @return A ação refeita, ou null se não houver ações
      */
     public Acao refazer() {
@@ -165,56 +177,64 @@ public class UndoRedoService {
 
     /**
      * Retorna o histórico completo de undo como string
+     * Utiliza pilhas temporárias para não modificar o estado
      */
     public String obterHistoricoUndo() {
         if (pilhaUndo.isEmpty()) {
             return "Histórico vazio";
         }
 
-        StringBuilder sb = new StringBuilder("Histórico de Undo:\n");
+        StringBuilder sb = new StringBuilder("Histórico de Undo (mais recente primeiro):\n");
         MinhaPilha<Acao> pilhaTemp = new MinhaPilha<>();
-        
-        int contador = 1;
-        while (!pilhaUndo.isEmpty()) {
-            Acao acao = pilhaUndo.pop();
-            sb.append(contador).append(". ").append(acao).append("\n");
-            pilhaTemp.push(acao);
-            contador++;
-        }
 
-        // Reconstrói a pilha original
-        while (!pilhaTemp.isEmpty()) {
-            pilhaUndo.push(pilhaTemp.pop());
-        }
+        try {
+            // Copia para pilha temporária
+            int contador = 1;
+            while (!pilhaUndo.isEmpty()) {
+                Acao acao = pilhaUndo.pop();
+                sb.append(contador).append(". ").append(acao).append("\n");
+                pilhaTemp.push(acao);
+                contador++;
+            }
 
-        return sb.toString();
+            return sb.toString();
+        } finally {
+            // Sempre reconstrói a pilha original, mesmo se houver exceção
+            while (!pilhaTemp.isEmpty()) {
+                pilhaUndo.push(pilhaTemp.pop());
+            }
+        }
     }
 
     /**
      * Retorna o histórico completo de redo como string
+     * Utiliza pilhas temporárias para não modificar o estado
      */
     public String obterHistoricoRedo() {
         if (pilhaRedo.isEmpty()) {
             return "Histórico vazio";
         }
 
-        StringBuilder sb = new StringBuilder("Histórico de Redo:\n");
+        StringBuilder sb = new StringBuilder("Histórico de Redo (mais recente primeiro):\n");
         MinhaPilha<Acao> pilhaTemp = new MinhaPilha<>();
-        
-        int contador = 1;
-        while (!pilhaRedo.isEmpty()) {
-            Acao acao = pilhaRedo.pop();
-            sb.append(contador).append(". ").append(acao).append("\n");
-            pilhaTemp.push(acao);
-            contador++;
-        }
 
-        // Reconstrói a pilha original
-        while (!pilhaTemp.isEmpty()) {
-            pilhaRedo.push(pilhaTemp.pop());
-        }
+        try {
+            // Copia para pilha temporária
+            int contador = 1;
+            while (!pilhaRedo.isEmpty()) {
+                Acao acao = pilhaRedo.pop();
+                sb.append(contador).append(". ").append(acao).append("\n");
+                pilhaTemp.push(acao);
+                contador++;
+            }
 
-        return sb.toString();
+            return sb.toString();
+        } finally {
+            // Sempre reconstrói a pilha original, mesmo se houver exceção
+            while (!pilhaTemp.isEmpty()) {
+                pilhaRedo.push(pilhaTemp.pop());
+            }
+        }
     }
 
     /**
