@@ -36,9 +36,6 @@ public final class EmprestimoMenu {
                 case 3 -> renovar();
                 case 4 -> calcularMultaMenu();
                 case 5 -> listar();
-                case 6 -> buscarPorId();
-                case 7 -> atualizar();
-                case 8 -> excluir();
                 case 100 -> System.out.println("Voltando para o menu principal...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -55,9 +52,6 @@ public final class EmprestimoMenu {
         System.out.println("3 - Renovar empréstimo");
         System.out.println("4 - Calcular multa");
         System.out.println("5 - Listar empréstimos");
-        System.out.println("6 - Buscar empréstimo por ID");
-        System.out.println("7 - Atualizar empréstimo");
-        System.out.println("8 - Excluir empréstimo");
         System.out.println("100 - Voltar");
         System.out.println("-------------------------------------");
     }
@@ -94,62 +88,6 @@ public final class EmprestimoMenu {
         }
     }
 
-    private void buscarPorId() {
-        MenuUtil.limparConsole();
-        System.out.println("=== BUSCAR EMPRÉSTIMO POR ID ===");
-
-        Integer id = lerInteiro("Informe o ID do empréstimo: ");
-        Emprestimo emprestimo = emprestimoService.buscarPorId(id);
-        if (emprestimo == null) {
-            System.out.println("Empréstimo não encontrado.");
-            return;
-        }
-
-        imprimirEmprestimo(emprestimo);
-    }
-
-    private void atualizar() {
-        MenuUtil.limparConsole();
-        System.out.println("=== ATUALIZAR EMPRÉSTIMO ===");
-
-        Integer id = lerInteiro("Informe o ID do empréstimo: ");
-        Emprestimo emprestimo = emprestimoService.buscarPorId(id);
-        if (emprestimo == null) {
-            System.out.println("Empréstimo não encontrado.");
-            return;
-        }
-
-        LocalDate dataPrevista = lerData("Informe a nova data prevista de devolução (dd/MM/yyyy): ");
-        emprestimo.setDataPrevista(dataPrevista);
-
-        String devolvido = lerTexto("O livro foi devolvido? (S/N): ");
-        if (devolvido.equalsIgnoreCase("S")) {
-            LocalDate dataDevolucao = lerData("Informe a data de devolução real (dd/MM/yyyy): ");
-            emprestimo.devolver(dataDevolucao);
-        } else {
-            emprestimo.setDevolvido(Boolean.FALSE);
-            emprestimo.setDataDevolucao(null);
-            emprestimo.setStatus("EMPRESTADO");
-        }
-
-        if (emprestimoService.atualizar(emprestimo)) {
-            System.out.println("Empréstimo atualizado com sucesso.");
-        } else {
-            System.out.println("Falha ao atualizar empréstimo.");
-        }
-    }
-
-    private void excluir() {
-        MenuUtil.limparConsole();
-        System.out.println("=== EXCLUIR EMPRÉSTIMO ===");
-
-        Integer id = lerInteiro("Informe o ID do empréstimo: ");
-        if (emprestimoService.deletar(id)) {
-            System.out.println("Empréstimo excluído com sucesso.");
-        } else {
-            System.out.println("Empréstimo não encontrado.");
-        }
-    }
 
     private void devolverExemplar() {
         MenuUtil.limparConsole();
