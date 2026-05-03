@@ -56,6 +56,8 @@ public class CategoriaService {
         }
     }
 
+
+    /* Id para exclusão */
     public Categoria buscarPorId(Integer id) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         try {
@@ -68,23 +70,6 @@ public class CategoriaService {
         }
     }
 
-    public void atualizar(Categoria categoria) {
-        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            entityManager.merge(categoria);
-            transaction.commit();
-            System.out.println("Categoria atualizada com sucesso.");
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            System.out.println("Erro ao atualizar categoria: " + e.getMessage());
-        } finally {
-            entityManager.close();
-        }
-    }
 
     public void deletar(Integer id) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
