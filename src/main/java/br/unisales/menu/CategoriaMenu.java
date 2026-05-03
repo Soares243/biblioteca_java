@@ -36,9 +36,7 @@ public final class CategoriaMenu {
             switch (opcao) {
                 case 1 -> cadastrar(categoriaService);
                 case 2 -> listar(categoriaService);
-                case 3 -> buscarPorId(categoriaService);
-                case 4 -> atualizar(categoriaService);
-                case 5 -> excluir(categoriaService);
+                case 3 -> excluir(categoriaService);
                 case 100 -> System.out.println("Voltando para o menu principal...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -54,9 +52,7 @@ public final class CategoriaMenu {
         System.out.println("--------------- MENU ----------------");
         System.out.println("1 - Cadastrar categoria");
         System.out.println("2 - Listar categorias");
-        System.out.println("3 - Buscar categoria por ID");
-        System.out.println("4 - Atualizar categoria");
-        System.out.println("5 - Excluir categoria");
+        System.out.println("3 - Excluir categoria");
         System.out.println("100 - Voltar");
         System.out.println("-------------------------------------");
     }
@@ -91,43 +87,6 @@ public final class CategoriaMenu {
         System.out.println("-------------------------------------");
     }
 
-    /**
-     * Busca um categoria pelo ID.
-     */
-    private void buscarPorId(CategoriaService categoriaService) {
-        MenuUtil.limparConsole();
-        System.out.println("=== BUSCAR CATEGORIA POR ID ===");
-        Integer id = this.lerInteiro("Informe o ID da categoria: ");
-        Categoria item = categoriaService.buscarPorId(id);
-        if (item == null) {
-            System.out.println("Categoria não encontrada.");
-            return;
-        }
-        System.out.println("Categoria encontrada:");
-        System.out.println("-------------------------------------");
-        System.out.println("ID: " + item.getId());
-        System.out.println("Nome: " + item.getNome());
-        System.out.println("-------------------------------------");
-    }
-
-    /**
-     * Atualiza os dados de um categoria existente.
-     */
-    private void atualizar(CategoriaService categoriaService) {
-        MenuUtil.limparConsole();
-        System.out.println("=== ATUALIZAR CATEGORIA ===");
-        Integer id = this.lerInteiro("Informe o ID da categoria que será atualizada: ");
-        Categoria item = categoriaService.buscarPorId(id);
-        if (item == null) {
-            System.out.println("Categoria não encontrada.");
-            return;
-        }
-        System.out.println("Dados atuais da categoria:");
-        System.out.println("Nome: " + item.getNome());
-        String novoNome = this.lerTexto("Informe a nova categoria: ");
-        item.setNome(novoNome);
-        categoriaService.atualizar(item);
-    }
 
     /**
      * Exclui um categoria pelo ID.
