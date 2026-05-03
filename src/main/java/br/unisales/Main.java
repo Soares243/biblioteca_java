@@ -70,7 +70,7 @@ public class Main {
         System.out.println("6 - Reserva");
         System.out.println("7 - Multa");
         System.out.println("8 - Relatório");
-        System.out.println("9 - Notificacoes");
+        System.out.println("9 - Notificacões");
         System.out.println("0 - Sair");
         System.out.println("-------------------------------------");
     }
