@@ -36,7 +36,6 @@ public final class AutorMenu {
             switch (opcao) {
                 case 1 -> cadastrar(autorService);
                 case 2 -> listar(autorService);
-                case 3 -> excluir(autorService);
                 case 100 -> System.out.println("Voltando para o menu principal...");
                 default -> System.out.println("Opção inválida. Tente novamente.");
             }
@@ -52,7 +51,6 @@ public final class AutorMenu {
         System.out.println("--------------- MENU ----------------");
         System.out.println("1 - Cadastrar autor");
         System.out.println("2 - Listar autores");
-        System.out.println("3 - Excluir autor");
         System.out.println("100 - Voltar");
         System.out.println("-------------------------------------");
     }
@@ -87,27 +85,7 @@ public final class AutorMenu {
     }
 
 
-    /**
-     * Exclui um autor pelo ID.
-     */
-    private void excluir(AutorService autorService) {
-        MenuUtil.limparConsole();
-        System.out.println("=== EXCLUIR AUTOR ===");
-        String nome = this.lerTexto("Informe o nome do autor que será excluído: ");
-        Autor item = autorService.buscarPorNome(nome);
-        if (item == null) {
-            System.out.println("Autor não encontrado.");
-            return;
-        }
-        System.out.println("Autor localizado:");
-        System.out.println("Nome: " + item.getNome());
-        String confirmacao = this.lerTexto("Deseja realmente excluir este autor? (S/N): ");
-        if (confirmacao.equalsIgnoreCase("S")) {
-            autorService.deletar(item.getId());
-        } else {
-            System.out.println("Exclusão cancelada.");
-        }
-    }
+ 
 
     /**
      * Lê um número inteiro digitado pelo usuário.

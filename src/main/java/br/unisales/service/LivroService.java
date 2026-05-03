@@ -104,6 +104,9 @@ public class LivroService {
 
             transaction.begin();
             entityManager.remove(livro);
+            entityManager.createQuery("DELETE FROM Exemplar e WHERE e.isbnLivro = :isbn")
+                    .setParameter("isbn", isbn)
+                    .executeUpdate();
             transaction.commit();
             System.out.println("Livro removido com sucesso.");
         } catch (Exception e) {
