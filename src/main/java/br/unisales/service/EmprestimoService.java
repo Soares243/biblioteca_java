@@ -74,13 +74,13 @@ public class EmprestimoService {
         }
     }
 
-    public boolean emprestarExemplar(Integer usuarioId, Integer exemplarId, String isbnLivro, LocalDate dataPrevista) {
-        if (usuarioId == null || exemplarId == null || isbnLivro == null || dataPrevista == null) {
+    public boolean emprestarExemplar(Integer usuarioId, Integer exemplarId, String tituloLivro, LocalDate dataPrevista) {
+        if (usuarioId == null || exemplarId == null || tituloLivro == null || dataPrevista == null) {
             return false;
         }
 
         Usuario usuario = buscarUsuarioPorId(usuarioId);
-        Livro livro = buscarLivroPorIsbn(isbnLivro);
+        Livro livro = buscarLivroPorTitulo(tituloLivro);
         if (usuario == null || livro == null) {
             return false;
         }
@@ -247,6 +247,26 @@ public class EmprestimoService {
             entityManager.close();
         }
     }
+
+    public Livro buscarLivroPorTitulo(String titulo) {
+    EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+    try {
+        return entityManager
+                .createQuery("SELECT l FROM Livro l WHERE l.titulo = :titulo", Livro.class)
+                .setParameter("titulo", titulo)
+                .getSingleResult();
+    } catch (NoResultException e) {
+        return null;
+    } catch (Exception e) {
+        System.out.println("Erro ao buscar livro: " + e.getMessage());
+        return null;
+    } finally {
+        entityManager.close();
+    }
+}
+
+
+    /* Buscar livro por ISBN */
 
     public Livro buscarLivroPorIsbn(String isbn) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
