@@ -35,7 +35,7 @@ public class Livro {
     private List<LivroCategoria> livroCategorias = new ArrayList<>();
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.MERGE, orphanRemoval = false)
     private List<LivroAutor> livroAutores = new ArrayList<>();
 
     @Fetch(FetchMode.SUBSELECT)
@@ -106,7 +106,7 @@ public class Livro {
         la.setId(new LivroAutorId(this.isbn, autor.getId()));
 
         livroAutores.add(la);
-        autor.getLivroAutores().add(la);
+
     }
 
     /**
