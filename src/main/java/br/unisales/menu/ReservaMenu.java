@@ -78,7 +78,15 @@ public final class ReservaMenu {
         MenuUtil.limparConsole();
         System.out.println("=== CADASTRAR RESERVA ===");
         Integer usuarioId = this.lerInteiro("Informe o ID do usuário: ");
-        String isbnLivro = this.lerTexto("Informe o ISBN do livro: ");
+        
+        String isbnLivro;
+        do {
+            isbnLivro = this.lerTexto("Informe o ISBN do livro (13 dígitos): ");
+            if (!isbnLivro.matches("\\d{13}")) {
+                System.out.println("ISBN inválido! Digite exatamente 13 números.");
+            }
+        } while (!isbnLivro.matches("\\d{13}"));
+
         Reserva item = new Reserva(null, usuarioId, isbnLivro, null, null);
         reservaService.inserir(item);
     }
