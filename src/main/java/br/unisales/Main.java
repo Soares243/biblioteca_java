@@ -24,7 +24,7 @@ public class Main {
         scanner = new Scanner(System.in, StandardCharsets.UTF_8);
 
         System.out.println("==========================================");
-        System.out.println("       BIBLIOTECA       ");
+        System.out.println("       BIBLIOTECA MENU      ");
         System.out.println("==========================================");
         int opcao;
 
@@ -62,7 +62,6 @@ public class Main {
     }
 
     private static void exibirMenu() {
-        System.out.println("--------------- BIBLIOTECA MENU ----------------");
         System.out.println("1 - Usuário");
         System.out.println("2 - Livro");
         System.out.println("3 - Autor");

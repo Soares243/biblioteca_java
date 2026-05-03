@@ -50,7 +50,7 @@ public final class ReservaMenu {
      * Exibe o menu principal do sistema.
      */
     private static void exibirMenu() {
-        System.out.println("--------------- MENU ----------------");
+        
         System.out.println("1 - Reservar livro");
         System.out.println("2 - Listar reservas");
         System.out.println("3 - Cancelar reserva");

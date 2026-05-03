@@ -46,7 +46,7 @@ public final class EmprestimoMenu {
     }
 
     private static void exibirMenu() {
-        System.out.println("--------------- EMPRESTIMO MENU ----------------");
+       
         System.out.println("1 - Emprestar exemplar");
         System.out.println("2 - Devolver exemplar");
         System.out.println("3 - Renovar empréstimo");

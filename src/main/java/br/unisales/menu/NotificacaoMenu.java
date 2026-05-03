@@ -44,7 +44,7 @@ public final class NotificacaoMenu {
     }
 
     private static void exibirMenu() {
-        System.out.println("--------------- MENU ----------------");
+        
         System.out.println("1 - Listar todas as notificacoes");
         System.out.println("2 - Listar nao lidas por usuario");
         System.out.println("3 - Marcar notificacao como lida");

@@ -41,7 +41,7 @@ public final class MultaMenu {
     }
 
     private static void exibirMenu() {
-        System.out.println("--------------- MULTA MENU ----------------");
+        
         System.out.println("1 - Listar multas");
         System.out.println("2 - Listar multas pendentes");
         System.out.println("3 - Buscar multa por empréstimo");

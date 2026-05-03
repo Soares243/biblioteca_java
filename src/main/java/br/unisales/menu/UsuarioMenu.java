@@ -50,7 +50,7 @@ public final class UsuarioMenu {
      * Exibe o menu principal do sistema.
      */
     private static void exibirMenu() {
-        System.out.println("--------------- USUÁRIO MENU ----------------");
+        
         System.out.println("1 - Cadastrar usuário");
         System.out.println("2 - Listar usuários");
         System.out.println("3 - Bloquear/Desbloquear usuário");

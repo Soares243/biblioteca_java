@@ -43,7 +43,7 @@ public final class RelatorioMenu {
     }
 
     private static void exibirMenu() {
-        System.out.println("--------------- MENU ----------------");
+        
         System.out.println("1 - Top mais emprestados");
         System.out.println("2 - Empréstimos em atraso");
         System.out.println("3 - Usuários com mais atrasos");

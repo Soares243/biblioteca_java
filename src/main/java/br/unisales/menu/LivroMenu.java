@@ -56,7 +56,7 @@ public final class LivroMenu {
      * Exibe o menu principal do sistema.
      */
     private static void exibirMenu() {
-        System.out.println("--------------- LIVRO MENU ----------------");
+        
         System.out.println("1 - Cadastrar livro");
         System.out.println("2 - Listar livros");
         System.out.println("3 - Buscar livro por título");

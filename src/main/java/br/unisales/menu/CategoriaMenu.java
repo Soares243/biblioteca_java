@@ -49,7 +49,7 @@ public final class CategoriaMenu {
      * Exibe o menu principal do sistema.
      */
     private static void exibirMenu() {
-        System.out.println("--------------- CATEGORIA MENU ----------------");
+        
         System.out.println("1 - Cadastrar categoria");
         System.out.println("2 - Listar categorias");
         System.out.println("3 - Excluir categoria");
