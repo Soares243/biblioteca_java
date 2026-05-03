@@ -15,7 +15,7 @@ public final class NotificacaoMenu {
     public NotificacaoMenu(Scanner scanner) {
         this.scanner = scanner;
         System.out.println("==========================================");
-        System.out.println("    NOTIFICACOES     ");
+        System.out.println("    NOTIFICACÕES     ");
         System.out.println("==========================================");
 
         ManagerFactory emf = new ManagerFactory("SQLitePU");
