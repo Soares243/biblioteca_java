@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import br.unisales.menu.CategoriaMenu;
 import br.unisales.menu.LivroMenu;
 import br.unisales.menu.MultaMenu;
+import br.unisales.menu.NotificacaoMenu;
 import br.unisales.menu.RelatorioMenu;
 import br.unisales.menu.ReservaMenu;
 import br.unisales.menu.UsuarioMenu;
@@ -40,6 +41,7 @@ public class Main {
                 case 6 -> menuReserva();
                 case 7 -> menuMulta();
                 case 8 -> menuRelatorio();
+                case 9 -> menuNotificacao();
                 case 0 -> System.out.println("Encerrando o sistema...");
                 default -> System.out.println("Opcao invalida. Tente novamente.");
             }
@@ -69,6 +71,7 @@ public class Main {
         System.out.println("6 - Reserva");
         System.out.println("7 - Multa");
         System.out.println("8 - Relatório");
+        System.out.println("9 - Notificacoes");
         System.out.println("0 - Sair");
         System.out.println("-------------------------------------");
     }
@@ -111,6 +114,11 @@ public class Main {
     private static void menuRelatorio() {
         MenuUtil.limparConsole();
         new RelatorioMenu(scanner);
+    }
+
+    private static void menuNotificacao() {
+        MenuUtil.limparConsole();
+        new NotificacaoMenu(scanner);
     }
 
     private static Integer lerInteiro(String mensagem) {
