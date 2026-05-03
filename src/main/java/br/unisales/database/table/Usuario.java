@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 public class Usuario {
     @Id
     private Integer id;
-    
+
     @Column(nullable = false, length = 100)
     private String nome;
 

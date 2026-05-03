@@ -43,7 +43,8 @@ public class EmprestimoService {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         try {
             return entityManager
-                    .createQuery("SELECT e FROM Emprestimo e JOIN FETCH e.usuario JOIN FETCH e.livro ORDER BY e.id", Emprestimo.class)
+                    .createQuery("SELECT e FROM Emprestimo e JOIN FETCH e.usuario JOIN FETCH e.livro ORDER BY e.id",
+                            Emprestimo.class)
                     .getResultList();
         } catch (Exception e) {
             System.out.println("Erro ao listar empréstimos: " + e.getMessage());
@@ -61,7 +62,8 @@ public class EmprestimoService {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         try {
             return entityManager
-                    .createQuery("SELECT e FROM Emprestimo e JOIN FETCH e.usuario JOIN FETCH e.livro WHERE e.id = :id", Emprestimo.class)
+                    .createQuery("SELECT e FROM Emprestimo e JOIN FETCH e.usuario JOIN FETCH e.livro WHERE e.id = :id",
+                            Emprestimo.class)
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -74,7 +76,8 @@ public class EmprestimoService {
         }
     }
 
-    public boolean emprestarExemplar(Integer usuarioId, Integer exemplarId, String tituloLivro, LocalDate dataPrevista) {
+    public boolean emprestarExemplar(Integer usuarioId, Integer exemplarId, String tituloLivro,
+            LocalDate dataPrevista) {
         if (usuarioId == null || exemplarId == null || tituloLivro == null || dataPrevista == null) {
             return false;
         }
@@ -249,22 +252,21 @@ public class EmprestimoService {
     }
 
     public Livro buscarLivroPorTitulo(String titulo) {
-    EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-    try {
-        return entityManager
-                .createQuery("SELECT l FROM Livro l WHERE l.titulo = :titulo", Livro.class)
-                .setParameter("titulo", titulo)
-                .getSingleResult();
-    } catch (NoResultException e) {
-        return null;
-    } catch (Exception e) {
-        System.out.println("Erro ao buscar livro: " + e.getMessage());
-        return null;
-    } finally {
-        entityManager.close();
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        try {
+            return entityManager
+                    .createQuery("SELECT l FROM Livro l WHERE l.titulo = :titulo", Livro.class)
+                    .setParameter("titulo", titulo)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar livro: " + e.getMessage());
+            return null;
+        } finally {
+            entityManager.close();
+        }
     }
-}
-
 
     /* Buscar livro por ISBN */
 
@@ -291,7 +293,8 @@ public class EmprestimoService {
     }
 
     private void registrarOuAtualizarMulta(EntityManager entityManager, Emprestimo emprestimo) {
-        if (emprestimo == null || !Boolean.TRUE.equals(emprestimo.getDevolvido()) || emprestimo.getDataDevolucao() == null) {
+        if (emprestimo == null || !Boolean.TRUE.equals(emprestimo.getDevolvido())
+                || emprestimo.getDataDevolucao() == null) {
             return;
         }
 
@@ -304,11 +307,11 @@ public class EmprestimoService {
         Multa multa = buscarMultaPorEmprestimoId(entityManager, emprestimo.getId());
 
         if (multa == null) {
-                Multa novaMulta = new Multa();
-                novaMulta.setEmprestimoId(emprestimo.getId());
-                novaMulta.setValor(valorCalculado);
-                novaMulta.setDiasAtraso(diasAtraso);
-                novaMulta.setQuitada(Boolean.FALSE);
+            Multa novaMulta = new Multa();
+            novaMulta.setEmprestimoId(emprestimo.getId());
+            novaMulta.setValor(valorCalculado);
+            novaMulta.setDiasAtraso(diasAtraso);
+            novaMulta.setQuitada(Boolean.FALSE);
             entityManager.persist(novaMulta);
             return;
         }

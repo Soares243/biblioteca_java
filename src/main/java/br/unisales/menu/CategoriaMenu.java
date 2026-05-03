@@ -87,7 +87,6 @@ public final class CategoriaMenu {
         System.out.println("-------------------------------------");
     }
 
-
     /**
      * Exclui um categoria pelo ID.
      */

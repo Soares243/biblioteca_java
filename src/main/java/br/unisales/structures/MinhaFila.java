@@ -51,7 +51,7 @@ public class MinhaFila<T> {
         T dado = inicio.dado;
         inicio = inicio.proximo;
         tamanho--;
-        
+
         if (isEmpty()) {
             fim = null;
         }

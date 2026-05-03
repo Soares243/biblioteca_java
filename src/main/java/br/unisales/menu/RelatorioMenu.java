@@ -82,10 +82,14 @@ public final class RelatorioMenu {
         for (Emprestimo emprestimo : resultados) {
             System.out.println("-------------------------------------");
             System.out.println("ID: " + emprestimo.getId());
-            System.out.println("Usuário ID: " + (emprestimo.getUsuario() != null ? emprestimo.getUsuario().getId() : "N/A"));
-            System.out.println("Usuário: " + (emprestimo.getUsuario() != null ? emprestimo.getUsuario().getNome() : "N/A"));
-            System.out.println("ISBN do livro: " + (emprestimo.getLivro() != null ? emprestimo.getLivro().getIsbn() : "N/A"));
-            System.out.println("Título do livro: " + (emprestimo.getLivro() != null ? emprestimo.getLivro().getTitulo() : "N/A"));
+            System.out.println(
+                    "Usuário ID: " + (emprestimo.getUsuario() != null ? emprestimo.getUsuario().getId() : "N/A"));
+            System.out.println(
+                    "Usuário: " + (emprestimo.getUsuario() != null ? emprestimo.getUsuario().getNome() : "N/A"));
+            System.out.println(
+                    "ISBN do livro: " + (emprestimo.getLivro() != null ? emprestimo.getLivro().getIsbn() : "N/A"));
+            System.out.println(
+                    "Título do livro: " + (emprestimo.getLivro() != null ? emprestimo.getLivro().getTitulo() : "N/A"));
             System.out.println("Data prevista de devolução: " + emprestimo.getDataPrevista().format(DATE_FORMATTER));
             System.out.println("Status: " + emprestimo.getStatus());
         }
@@ -119,9 +123,11 @@ public final class RelatorioMenu {
             System.out.println("Não foi possível gerar as estatísticas.");
             return;
         }
-        System.out.println("Mês | Categoria 0 | Categoria 1 | Categoria 2 | Categoria 3 | Categoria 4 | Categoria 5 | Categoria 6 | Categoria 7 | Categoria 8 | Categoria 9");
-        System.out.println("---------------------------------------------------------------------------------------------------------------");
-        String[] meses = {"Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"};
+        System.out.println(
+                "Mês | Categoria 0 | Categoria 1 | Categoria 2 | Categoria 3 | Categoria 4 | Categoria 5 | Categoria 6 | Categoria 7 | Categoria 8 | Categoria 9");
+        System.out.println(
+                "---------------------------------------------------------------------------------------------------------------");
+        String[] meses = { "Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez" };
         for (int i = 0; i < matriz.getLinhas(); i++) {
             System.out.printf("%-3s", meses[i]);
             for (int j = 0; j < matriz.getColunas(); j++) {

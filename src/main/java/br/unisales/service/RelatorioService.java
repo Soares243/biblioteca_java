@@ -51,26 +51,26 @@ public class RelatorioService {
      * Retorna empréstimos em atraso (data de devolução prevista passou)
      */
     public List<Emprestimo> emAtraso() {
-    EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-    try {
-        LocalDate hoje = LocalDate.now();
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        try {
+            LocalDate hoje = LocalDate.now();
 
-        return entityManager.createQuery(
-                "SELECT e FROM Emprestimo e " +
-                "JOIN FETCH e.usuario " +   // ← adicionado
-                "JOIN FETCH e.livro " +     // ← adicionado
-                "WHERE e.dataPrevista < :hoje AND e.dataDevolucao IS NULL " +
-                "ORDER BY e.dataPrevista ASC",
-                Emprestimo.class)
-                .setParameter("hoje", hoje)
-                .getResultList();
-    } catch (Exception e) {
-        System.out.println("Erro ao buscar empréstimos em atraso: " + e.getMessage());
-        return List.of();
-    } finally {
-        entityManager.close();
+            return entityManager.createQuery(
+                    "SELECT e FROM Emprestimo e " +
+                            "JOIN FETCH e.usuario " + // ← adicionado
+                            "JOIN FETCH e.livro " + // ← adicionado
+                            "WHERE e.dataPrevista < :hoje AND e.dataDevolucao IS NULL " +
+                            "ORDER BY e.dataPrevista ASC",
+                    Emprestimo.class)
+                    .setParameter("hoje", hoje)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar empréstimos em atraso: " + e.getMessage());
+            return List.of();
+        } finally {
+            entityManager.close();
+        }
     }
-}
 
     /**
      * Retorna usuários com mais atrasos em empréstimos

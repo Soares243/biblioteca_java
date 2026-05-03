@@ -69,9 +69,9 @@ public final class UsuarioMenu {
         String senha = this.lerTexto("Informe senha: ");
         String tipo = this.lerTexto("Informe o tipo (ALUNO, PROFESSOR, SERVIDOR): ");
         UsuarioTipoEnum stn = UsuarioTipoEnum.ALUNO;
-        if(tipo.toLowerCase().equals("professor"))
+        if (tipo.toLowerCase().equals("professor"))
             stn = UsuarioTipoEnum.PROFESSOR;
-        else if(tipo.toLowerCase().equals("servidor")) 
+        else if (tipo.toLowerCase().equals("servidor"))
             stn = UsuarioTipoEnum.SERVIDOR;
         Usuario item = new Usuario(null, nome, stn, email, senha);
         usuarioService.inserir(item);
@@ -97,7 +97,6 @@ public final class UsuarioMenu {
         }
         System.out.println("-------------------------------------");
     }
-
 
     /**
      * Bloqueia ou desbloqueia um usuário pelo ID.

@@ -84,9 +84,6 @@ public final class AutorMenu {
         System.out.println("-------------------------------------");
     }
 
-
- 
-
     /**
      * Lê um número inteiro digitado pelo usuário.
      */

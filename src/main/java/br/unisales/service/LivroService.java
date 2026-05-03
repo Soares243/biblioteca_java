@@ -178,6 +178,7 @@ public class LivroService {
             entityManager.close();
         }
     }
+
     public List<Exemplar> listarExemplaresPorLivro(String isbn) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         try {

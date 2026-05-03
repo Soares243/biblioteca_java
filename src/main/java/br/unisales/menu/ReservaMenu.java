@@ -78,7 +78,7 @@ public final class ReservaMenu {
         MenuUtil.limparConsole();
         System.out.println("=== CADASTRAR RESERVA ===");
         Integer usuarioId = this.lerInteiro("Informe o ID do usuário: ");
-        
+
         String isbnLivro;
         do {
             isbnLivro = this.lerTexto("Informe o ISBN do livro (13 dígitos): ");

@@ -149,8 +149,7 @@ public class UsuarioService {
         try {
             Integer maxId = em.createQuery(
                     "SELECT MAX(u.id) FROM Usuario u",
-                    Integer.class
-            ).getSingleResult();
+                    Integer.class).getSingleResult();
             return maxId != null ? maxId : 0;
         } catch (Exception e) {
             System.out.println("Erro ao buscar maior ID: " + e.getMessage());

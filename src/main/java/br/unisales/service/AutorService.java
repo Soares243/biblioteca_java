@@ -57,19 +57,19 @@ public class AutorService {
     }
 
     public Autor buscarPorNome(String nome) {
-    EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-    try {
-        return entityManager.createQuery(
-                "SELECT a FROM Autor a WHERE a.nome = :nome", Autor.class)
-                .setParameter("nome", nome)
-                .getSingleResult();
-    } catch (Exception e) {
-        System.out.println("Erro ao buscar autor por nome: " + e.getMessage());
-        return null;
-    } finally {
-        entityManager.close();
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        try {
+            return entityManager.createQuery(
+                    "SELECT a FROM Autor a WHERE a.nome = :nome", Autor.class)
+                    .setParameter("nome", nome)
+                    .getSingleResult();
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar autor por nome: " + e.getMessage());
+            return null;
+        } finally {
+            entityManager.close();
+        }
     }
-}
 
     public void deletar(Integer id) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
@@ -100,8 +100,7 @@ public class AutorService {
         try {
             Integer maxId = em.createQuery(
                     "SELECT MAX(u.id) FROM Autor u",
-                    Integer.class
-            ).getSingleResult();
+                    Integer.class).getSingleResult();
             return maxId != null ? maxId : 0;
         } catch (Exception e) {
             System.out.println("Erro ao buscar maior ID: " + e.getMessage());
@@ -110,27 +109,26 @@ public class AutorService {
             em.close();
         }
     }
-    
 
-public Autor buscarPorId(Integer id) {
-    EntityManager entityManager = this.entityManagerFactory.createEntityManager();
-    try {
-        Autor autor = entityManager.find(Autor.class, id);
-        if (autor == null) {
-            System.out.println("Autor não encontrado.");
+    public Autor buscarPorId(Integer id) {
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        try {
+            Autor autor = entityManager.find(Autor.class, id);
+            if (autor == null) {
+                System.out.println("Autor não encontrado.");
+                return null;
+            }
+            // Força o carregamento da coleção lazy ANTES de fechar a sessão
+            if (autor.getLivroAutores() != null) {
+                autor.getLivroAutores().size();
+            }
+            return autor;
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar autor: " + e.getMessage());
             return null;
+        } finally {
+            entityManager.close();
         }
-        // Força o carregamento da coleção lazy ANTES de fechar a sessão
-        if (autor.getLivroAutores() != null) {
-            autor.getLivroAutores().size();
-        }
-        return autor;
-    } catch (Exception e) {
-        System.out.println("Erro ao buscar autor: " + e.getMessage());
-        return null;
-    } finally {
-        entityManager.close();
     }
-}
 
 }

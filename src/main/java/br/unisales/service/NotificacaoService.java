@@ -33,7 +33,7 @@ public class NotificacaoService {
                 Long jaExiste = entityManager
                         .createQuery(
                                 "SELECT COUNT(n) FROM Notificacao n " +
-                                "WHERE n.usuarioId = :uid AND n.mensagem LIKE :msg",
+                                        "WHERE n.usuarioId = :uid AND n.mensagem LIKE :msg",
                                 Long.class)
                         .setParameter("uid", reserva.getUsuarioId())
                         .setParameter("msg", "%Reserva ID: " + reserva.getId() + "%")
@@ -43,8 +43,8 @@ public class NotificacaoService {
                     Notificacao notificacao = Notificacao.builder()
                             .usuarioId(reserva.getUsuarioId())
                             .mensagem("O livro que voce reservou esta disponivel para retirada! " +
-                                      "ISBN: " + reserva.getIsbnLivro() +
-                                      " | Reserva ID: " + reserva.getId())
+                                    "ISBN: " + reserva.getIsbnLivro() +
+                                    " | Reserva ID: " + reserva.getId())
                             .data(LocalDate.now())
                             .lida(false)
                             .build();
@@ -115,7 +115,7 @@ public class NotificacaoService {
             return entityManager
                     .createQuery(
                             "SELECT n FROM Notificacao n WHERE n.usuarioId = :uid AND n.lida = false " +
-                            "ORDER BY n.data DESC, n.id DESC",
+                                    "ORDER BY n.data DESC, n.id DESC",
                             Notificacao.class)
                     .setParameter("uid", usuarioId)
                     .getResultList();

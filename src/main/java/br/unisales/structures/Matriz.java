@@ -2,7 +2,8 @@ package br.unisales.structures;
 
 /**
  * Implementação genérica de uma Matriz bidimensional
- * Útil para armazenar estatísticas por múltiplas dimensões (ex: mês x categoria)
+ * Útil para armazenar estatísticas por múltiplas dimensões (ex: mês x
+ * categoria)
  * 
  * @param <T> o tipo dos elementos armazenados
  */
@@ -96,9 +97,8 @@ public class Matriz<T> {
     private void validarIndices(int linha, int coluna) {
         if (linha < 0 || linha >= linhas || coluna < 0 || coluna >= colunas) {
             throw new IndexOutOfBoundsException(
-                    String.format("Índices inválidos: [%d][%d] para matriz [%d][%d]", 
-                    linha, coluna, linhas, colunas)
-            );
+                    String.format("Índices inválidos: [%d][%d] para matriz [%d][%d]",
+                            linha, coluna, linhas, colunas));
         }
     }
 

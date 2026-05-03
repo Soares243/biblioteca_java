@@ -56,7 +56,6 @@ public class CategoriaService {
         }
     }
 
-
     /* Id para exclusão */
     public Categoria buscarPorId(Integer id) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
@@ -69,7 +68,6 @@ public class CategoriaService {
             entityManager.close();
         }
     }
-
 
     public void deletar(Integer id) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
@@ -100,8 +98,7 @@ public class CategoriaService {
         try {
             Integer maxId = em.createQuery(
                     "SELECT MAX(c.id) FROM Categoria c",
-                    Integer.class
-            ).getSingleResult();
+                    Integer.class).getSingleResult();
             return maxId != null ? maxId : 0;
         } catch (Exception e) {
             System.out.println("Erro ao buscar maior ID: " + e.getMessage());

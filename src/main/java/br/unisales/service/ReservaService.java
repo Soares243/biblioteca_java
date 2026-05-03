@@ -66,7 +66,9 @@ public class ReservaService {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         try {
             return entityManager
-                    .createQuery("SELECT r FROM Reserva r WHERE r.isbnLivro = :isbn AND r.status = 'RESERVADO' ORDER BY r.dataReserva, r.id", Reserva.class)
+                    .createQuery(
+                            "SELECT r FROM Reserva r WHERE r.isbnLivro = :isbn AND r.status = 'RESERVADO' ORDER BY r.dataReserva, r.id",
+                            Reserva.class)
                     .setParameter("isbn", isbnLivro)
                     .setMaxResults(1)
                     .getSingleResult();
@@ -90,7 +92,9 @@ public class ReservaService {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             Reserva reserva = entityManager
-                    .createQuery("SELECT r FROM Reserva r WHERE r.isbnLivro = :isbn AND r.status = 'RESERVADO' ORDER BY r.dataReserva, r.id", Reserva.class)
+                    .createQuery(
+                            "SELECT r FROM Reserva r WHERE r.isbnLivro = :isbn AND r.status = 'RESERVADO' ORDER BY r.dataReserva, r.id",
+                            Reserva.class)
                     .setParameter("isbn", isbnLivro)
                     .setMaxResults(1)
                     .getSingleResult();
