@@ -2,6 +2,7 @@ package br.unisales.service;
 
 import br.unisales.database.table.Livro;
 import br.unisales.database.table.LivroCategoria;
+import br.unisales.database.table.LivroAutor;
 import br.unisales.database.table.Autor;
 import br.unisales.database.table.Categoria;
 import br.unisales.database.table.Exemplar;
@@ -35,6 +36,15 @@ public class LivroService {
                 categoriasReattachadas.add(lc);
             }
             livro.setLivroCategorias(categoriasReattachadas);
+
+            List<LivroAutor> autoresReattachados = new ArrayList<>();
+            for (LivroAutor la : livro.getLivroAutores()) {
+                Autor autorManaged = entityManager.merge(la.getAutor());
+                la.setAutor(autorManaged);
+                la.setLivro(livro);
+                autoresReattachados.add(la);
+            }
+            livro.setLivroAutores(autoresReattachados);
 
             entityManager.persist(livro);
             transaction.commit();
@@ -90,6 +100,25 @@ public class LivroService {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
+
+            List<LivroCategoria> categoriasReattachadas = new ArrayList<>();
+            for (LivroCategoria lc : livro.getLivroCategorias()) {
+                Categoria categoriaManaged = entityManager.merge(lc.getCategoria());
+                lc.setCategoria(categoriaManaged);
+                lc.setLivro(livro);
+                categoriasReattachadas.add(lc);
+            }
+            livro.setLivroCategorias(categoriasReattachadas);
+
+            List<LivroAutor> autoresReattachados = new ArrayList<>();
+            for (LivroAutor la : livro.getLivroAutores()) {
+                Autor autorManaged = entityManager.merge(la.getAutor());
+                la.setAutor(autorManaged);
+                la.setLivro(livro);
+                autoresReattachados.add(la);
+            }
+            livro.setLivroAutores(autoresReattachados);
+
             entityManager.merge(livro);
             transaction.commit();
             System.out.println("Livro atualizado com sucesso.");

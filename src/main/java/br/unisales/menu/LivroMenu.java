@@ -284,10 +284,10 @@ public final class LivroMenu {
         }
 
         if (!livro.getLivroAutores().isEmpty()) {
-            System.out.println("Autor:");
+            System.out.print("Autor:");
             for (var la : livro.getLivroAutores()) {
                 if (la.getAutor() != null) {
-                    System.out.println("  - " + la.getAutor().getNome());
+                    System.out.println(" " + la.getAutor().getNome());
                 }
             }
         }

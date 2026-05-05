@@ -35,7 +35,7 @@ public class Livro {
     private List<LivroCategoria> livroCategorias = new ArrayList<>();
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "livro", cascade = CascadeType.MERGE, orphanRemoval = false)
+    @OneToMany(mappedBy = "livro", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LivroAutor> livroAutores = new ArrayList<>();
 
     @Fetch(FetchMode.SUBSELECT)
