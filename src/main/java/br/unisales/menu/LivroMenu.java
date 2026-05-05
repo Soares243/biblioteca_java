@@ -99,13 +99,13 @@ public final class LivroMenu {
         }
 
         // Adicionar autores (opcional)
-        String adicionarAutores = this.lerTexto("Deseja adicionar autores? (sim/não): ");
+        String adicionarAutores = this.lerTexto("Deseja adicionar um autor? (sim/não): ");
         if (adicionarAutores.equalsIgnoreCase("sim")) {
             adicionarAutores(livro);
         }
 
         // Adicionar categorias (opcional)
-        String adicionarCategorias = this.lerTexto("Deseja adicionar categorias? (sim/não): ");
+        String adicionarCategorias = this.lerTexto("Deseja adicionar uma categoria? (sim/não): ");
         if (adicionarCategorias.equalsIgnoreCase("sim")) {
             adicionarCategorias(livro);
         }
@@ -293,10 +293,10 @@ public final class LivroMenu {
         }
 
         if (!livro.getLivroCategorias().isEmpty()) {
-            System.out.println("Categoria:");
+            System.out.print("Categoria:");
             for (var lc : livro.getLivroCategorias()) {
                 if (lc.getCategoria() != null) {
-                    System.out.println("  - " + lc.getCategoria().getNome());
+                    System.out.println(" " + lc.getCategoria().getNome());
                 }
             }
         }
