@@ -71,7 +71,7 @@ public class Livro {
         lc.setId(new LivroCategoriaId(this.isbn, categoria.getId()));
 
         livroCategorias.add(lc);
-        categoria.getLivroCategorias().add(lc);
+        // remova: categoria.getLivroCategorias().add(lc);
     }
 
     /**
@@ -84,7 +84,7 @@ public class Livro {
         livroCategorias.removeIf(lc -> {
             boolean match = lc.getCategoria().equals(categoria);
             if (match) {
-                lc.getCategoria().getLivroCategorias().remove(lc);
+                // remova: lc.getCategoria().getLivroCategorias().remove(lc);
                 lc.setLivro(null);
                 lc.setCategoria(null);
             }

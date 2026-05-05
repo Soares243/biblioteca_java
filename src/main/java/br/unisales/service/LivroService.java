@@ -1,12 +1,15 @@
 package br.unisales.service;
 
 import br.unisales.database.table.Livro;
+import br.unisales.database.table.LivroCategoria;
 import br.unisales.database.table.Autor;
+import br.unisales.database.table.Categoria;
 import br.unisales.database.table.Exemplar;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LivroService {
@@ -23,6 +26,16 @@ public class LivroService {
 
         try {
             transaction.begin();
+
+            List<LivroCategoria> categoriasReattachadas = new ArrayList<>();
+            for (LivroCategoria lc : livro.getLivroCategorias()) {
+                Categoria categoriaManaged = entityManager.merge(lc.getCategoria());
+                lc.setCategoria(categoriaManaged);
+                lc.setLivro(livro);
+                categoriasReattachadas.add(lc);
+            }
+            livro.setLivroCategorias(categoriasReattachadas);
+
             entityManager.persist(livro);
             transaction.commit();
             System.out.println("Livro inserido com sucesso.");
@@ -30,12 +43,10 @@ public class LivroService {
             if (transaction.isActive()) {
                 transaction.rollback();
             }
-
             Throwable causa = e;
             while (causa.getCause() != null) {
                 causa = causa.getCause();
             }
-
             System.out.println("Erro ao inserir livro: " + causa.getMessage());
         } finally {
             entityManager.close();
@@ -179,6 +190,32 @@ public class LivroService {
         }
     }
 
+    public Categoria buscarCategoriaPorId(Integer id) {
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        try {
+            return entityManager.find(Categoria.class, id);
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar categoria: " + e.getMessage());
+            return null;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public List<Categoria> listarTodasCategorias() {
+        EntityManager entityManager = this.entityManagerFactory.createEntityManager();
+        try {
+            return entityManager
+                    .createQuery("SELECT c FROM Categoria c ORDER BY c.nome", Categoria.class)
+                    .getResultList();
+        } catch (Exception e) {
+            System.out.println("Erro ao listar categorias: " + e.getMessage());
+            return List.of();
+        } finally {
+            entityManager.close();
+        }
+    }
+
     public List<Exemplar> listarExemplaresPorLivro(String isbn) {
         EntityManager entityManager = this.entityManagerFactory.createEntityManager();
         try {
@@ -199,7 +236,13 @@ public class LivroService {
             return;
         }
         livro.getPalavrasChave().size();
-        livro.getLivroAutores().size();
-        livro.getLivroCategorias().size();
+        livro.getLivroAutores().forEach(la -> {
+            if (la.getAutor() != null)
+                la.getAutor().getNome();
+        });
+        livro.getLivroCategorias().forEach(lc -> {
+            if (lc.getCategoria() != null)
+                lc.getCategoria().getNome();
+        });
     }
 }

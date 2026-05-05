@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import br.unisales.database.table.Autor;
+import br.unisales.database.table.Categoria;
 import br.unisales.database.table.Exemplar;
 import br.unisales.database.table.Livro;
 import br.unisales.manager_factory.ManagerFactory;
@@ -56,7 +57,7 @@ public final class LivroMenu {
      * Exibe o menu principal do sistema.
      */
     private static void exibirMenu() {
-        
+
         System.out.println("1 - Cadastrar livro");
         System.out.println("2 - Listar livros");
         System.out.println("3 - Buscar livro por título");
@@ -101,6 +102,12 @@ public final class LivroMenu {
         String adicionarAutores = this.lerTexto("Deseja adicionar autores? (sim/não): ");
         if (adicionarAutores.equalsIgnoreCase("sim")) {
             adicionarAutores(livro);
+        }
+
+        // Adicionar categorias (opcional)
+        String adicionarCategorias = this.lerTexto("Deseja adicionar categorias? (sim/não): ");
+        if (adicionarCategorias.equalsIgnoreCase("sim")) {
+            adicionarCategorias(livro);
         }
 
         livroService.inserir(livro);
@@ -216,6 +223,39 @@ public final class LivroMenu {
     }
 
     /**
+     * Adiciona categorias ao livro.
+     */
+    private void adicionarCategorias(Livro livro) {
+        List<Categoria> categoriasDisponiveis = livroService.listarTodasCategorias();
+
+        if (categoriasDisponiveis.isEmpty()) {
+            System.out.println("Não há categorias cadastradas no sistema.");
+            return;
+        }
+
+        String adicionarMais = "sim";
+        while (adicionarMais.equalsIgnoreCase("sim")) {
+            System.out.println("\n--- Categorias disponíveis ---");
+            for (Categoria categoria : categoriasDisponiveis) {
+                System.out.println("ID: " + categoria.getId() + " - Nome: " + categoria.getNome());
+            }
+            System.out.println("------------------------------");
+
+            Integer categoriaId = this.lerInteiro("Informe o ID da categoria: ");
+            Categoria categoria = livroService.buscarCategoriaPorId(categoriaId);
+
+            if (categoria != null) {
+                livro.addCategoria(categoria);
+                System.out.println("Categoria adicionada ao livro.");
+            } else {
+                System.out.println("Categoria não encontrada.");
+            }
+
+            adicionarMais = this.lerTexto("Deseja adicionar mais categorias? (sim/não): ");
+        }
+    }
+
+    /**
      * Exibe os detalhes completos de um livro.
      */
     private void exibirDetalhesLivro(Livro livro) {
@@ -244,10 +284,19 @@ public final class LivroMenu {
         }
 
         if (!livro.getLivroAutores().isEmpty()) {
-            System.out.println("Autores:");
+            System.out.println("Autor:");
             for (var la : livro.getLivroAutores()) {
                 if (la.getAutor() != null) {
                     System.out.println("  - " + la.getAutor().getNome());
+                }
+            }
+        }
+
+        if (!livro.getLivroCategorias().isEmpty()) {
+            System.out.println("Categoria:");
+            for (var lc : livro.getLivroCategorias()) {
+                if (lc.getCategoria() != null) {
+                    System.out.println("  - " + lc.getCategoria().getNome());
                 }
             }
         }
