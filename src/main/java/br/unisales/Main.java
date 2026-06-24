@@ -30,7 +30,7 @@ public class Main {
 
         do {
             exibirMenu();
-            opcao = lerInteiro("Escolha uma opcao: ");
+            opcao = lerInteiro("escolha uma opcao: ");
 
             switch (opcao) {
                 case 1 -> menuUsuario();
