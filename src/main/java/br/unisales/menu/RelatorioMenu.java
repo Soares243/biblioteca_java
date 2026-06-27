@@ -21,7 +21,7 @@ public final class RelatorioMenu {
         System.out.println("       RELATÓRIO       ");
         System.out.println("==========================================");
 
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         RelatorioService relatorioService = new RelatorioService(emf.get());
 
         int opcao;

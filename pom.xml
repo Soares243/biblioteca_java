@@ -58,11 +58,11 @@
         </dependency> -->
 
         <!-- PostgreSQL -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>42.7.3</version>
-        </dependency> -->
+        </dependency>
 
         <!-- SQL Server -->
         <!--<dependency>
@@ -97,6 +97,14 @@
                             <version>1.18.38</version>
                         </path>
                     </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <mainClass>br.unisales.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

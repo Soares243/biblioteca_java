@@ -13,19 +13,23 @@ import br.unisales.menu.RelatorioMenu;
 import br.unisales.menu.ReservaMenu;
 import br.unisales.menu.UsuarioMenu;
 import br.unisales.menu.util.MenuUtil;
+import br.unisales.manager_factory.ManagerFactory;
 
 public class Main {
 
     private static Scanner scanner;
 
     public static void main(String[] args) {
-        // MenuUtil.configurarConsoleUtf8();
+        MenuUtil.configurarConsoleUtf8();
         configurarLogs();
         scanner = new Scanner(System.in, StandardCharsets.UTF_8);
 
-        System.out.println("==========================================");
-        System.out.println("       BIBLIOTECA MENU      ");
-        System.out.println("==========================================");
+        exibirCabecalho();
+        if (!inicializarBanco()) {
+            scanner.close();
+            return;
+        }
+
         int opcao;
 
         do {
@@ -51,6 +55,42 @@ public class Main {
         scanner.close();
     }
 
+    private static void exibirCabecalho() {
+        System.out.println("==========================================");
+        System.out.println("       SISTEMA DE BIBLIOTECA");
+        System.out.println("==========================================");
+        System.out.println("Banco: PostgreSQL");
+        System.out.println("Host : localhost:5432");
+        System.out.println("Base : biblioteca_java");
+        System.out.println("------------------------------------------");
+    }
+
+    private static boolean inicializarBanco() {
+        System.out.println("Conectando ao banco e preparando tabelas...");
+        try (ManagerFactory emf = new ManagerFactory()) {
+            System.out.println("Banco conectado. Tabelas verificadas/criadas com update.");
+            System.out.println();
+            return true;
+        } catch (RuntimeException e) {
+            Throwable causa = encontrarCausaRaiz(e);
+            System.out.println();
+            System.out.println("Nao foi possivel conectar ao PostgreSQL.");
+            System.out.println("Confira se o PostgreSQL esta aberto e se o banco biblioteca_java existe.");
+            System.out.println("URL: jdbc:postgresql://localhost:5432/biblioteca_java");
+            System.out.println("Usuario: postgres");
+            System.out.println("Erro: " + causa.getMessage());
+            return false;
+        }
+    }
+
+    private static Throwable encontrarCausaRaiz(Throwable erro) {
+        Throwable causa = erro;
+        while (causa.getCause() != null) {
+            causa = causa.getCause();
+        }
+        return causa;
+    }
+
     private static void configurarLogs() {
         Logger hibernateLogger = Logger.getLogger("org.hibernate");
         hibernateLogger.setLevel(Level.SEVERE);
@@ -62,15 +102,15 @@ public class Main {
     }
 
     private static void exibirMenu() {
-        System.out.println("1 - Usuário");
+        System.out.println("1 - Usuario");
         System.out.println("2 - Livro");
         System.out.println("3 - Autor");
         System.out.println("4 - Categoria");
-        System.out.println("5 - Empréstimo");
+        System.out.println("5 - Emprestimo");
         System.out.println("6 - Reserva");
         System.out.println("7 - Multa");
-        System.out.println("8 - Relatório");
-        System.out.println("9 - Notificacões");
+        System.out.println("8 - Relatorio");
+        System.out.println("9 - Notificacoes");
         System.out.println("0 - Sair");
         System.out.println("-------------------------------------");
     }

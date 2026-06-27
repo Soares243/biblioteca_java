@@ -17,16 +17,9 @@ public final class ReservaMenu {
         System.out.println("    RESERVA     ");
         System.out.println("==========================================");
         /*
-         * Cria a fábrica de EntityManager com base na persistence-unit
-         * definida no arquivo persistence.xml.
-         *
-         * Troque "SQLitePU" por:
-         * - "MySQLPU"
-         * - "PostgresPU"
-         * - "SqlServerPU"
-         * conforme o banco desejado.
+         * Cria a fabrica de EntityManager usando a persistence-unit padrao.
          */
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         ReservaService reservaService = new ReservaService(emf.get());
         int opcao;
         do {

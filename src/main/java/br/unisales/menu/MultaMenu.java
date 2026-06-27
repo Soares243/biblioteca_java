@@ -18,7 +18,7 @@ public final class MultaMenu {
         System.out.println("         MULTA MENU         ");
         System.out.println("==========================================");
 
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         MultaService multaService = new MultaService(emf.get());
 
         int opcao;

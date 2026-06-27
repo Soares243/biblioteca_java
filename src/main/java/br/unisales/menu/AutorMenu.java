@@ -18,7 +18,7 @@ public final class AutorMenu {
         System.out.println("==========================================");
         
         
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         AutorService autorService = new AutorService(emf.get());
         int opcao;
         do {

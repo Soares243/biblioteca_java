@@ -21,7 +21,7 @@ public final class CategoriaMenu {
          * definida no arquivo persistence.xml.
          *
          */
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         CategoriaService categoriaService = new CategoriaService(emf.get());
         int opcao;
         do {

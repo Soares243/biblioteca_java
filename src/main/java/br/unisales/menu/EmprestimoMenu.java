@@ -1,4 +1,4 @@
-﻿package br.unisales.menu;
+package br.unisales.menu;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,7 +23,7 @@ public final class EmprestimoMenu {
         System.out.println("       EMPRESTIMO MENU       ");
         System.out.println("==========================================");
 
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         this.emprestimoService = new EmprestimoService(emf.get());
 
         int opcao;

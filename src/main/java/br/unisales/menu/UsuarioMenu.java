@@ -21,7 +21,7 @@ public final class UsuarioMenu {
          * Cria a fábrica de EntityManager com base na persistence-unit
          * definida no arquivo persistence.xml.
          */
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         UsuarioService usuarioService = new UsuarioService(emf.get());
         int opcao;
         do {

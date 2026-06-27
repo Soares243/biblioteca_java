@@ -18,7 +18,7 @@ public final class NotificacaoMenu {
         System.out.println("    NOTIFICACÕES     ");
         System.out.println("==========================================");
 
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         NotificacaoService notificacaoService = new NotificacaoService(emf.get());
 
         System.out.println("Verificando reservas atendidas...");

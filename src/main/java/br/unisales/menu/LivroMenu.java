@@ -26,7 +26,7 @@ public final class LivroMenu {
          * Cria a fábrica de EntityManager com base na persistence-unit
          * definida no arquivo persistence.xml.
          */
-        ManagerFactory emf = new ManagerFactory("SQLitePU");
+        ManagerFactory emf = new ManagerFactory();
         this.livroService = new LivroService(emf.get());
         this.exemplarService = new ExemplarService(emf.get());
         int opcao;
