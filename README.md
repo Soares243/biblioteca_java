@@ -4,7 +4,7 @@ Sistema de biblioteca em Java com menus no terminal, JPA/Hibernate e PostgreSQL.
 
 ## Integrantes
 
-Luiz Miguel Mazzega Lamas, Ester Soares Serafim
+Luiz Miguel Mazzega Lamas, Ester Soares Serafim, Deivid Ramos
 
 ## Banco de dados
 
